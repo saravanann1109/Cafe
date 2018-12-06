@@ -1,0 +1,79 @@
+<div id="layout-content" class="layout-content">
+  <div class="container-fluid">
+    <p-table [columns]="cols" [value]="itemsList" selectionMode="single" [(selection)]="selectedItem" (onRowSelect)="onRowSelect($event)"
+      [paginator]="true" [rows]="15">
+      <ng-template pTemplate="caption">
+        Manage Menu
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns; let last=last">
+            <span *ngIf="!last">{{rowData[col.field]}}</span>
+            <p-checkbox [(ngModel)]="rowData[col.field]" *ngIf="last" binary="true"></p-checkbox>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+          <button type="button" pButton class="ui-button-success" icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-dialog header="Menu Detail" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+      [width]="300">
+      <div class="ui-g ui-fluid" *ngIf="item">
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="vin">Menu Name</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="name" [(ngModel)]="item.Name" />
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="year">Menu Code</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="cost" [(ngModel)]="item.Code" />
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="brand">Cost</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="brand" [(ngModel)]="item.Cost" />
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="brand">Active</label>
+          </div>
+          <div class="ui-g-8">
+            <p-checkbox [(ngModel)]="item.IsActive" binary="true"></p-checkbox>
+          </div>
+        </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" *ngIf="!isNewItem" pButton icon="pi pi-close" class="ui-button-success" (click)="SaveOrDelete('delete')"
+            label="Delete"></button>
+          <button type="button" *ngIf="!isNewItem" pButton icon="pi pi-check" class="ui-button-success" (click)="SaveOrDelete('save')"
+            label="Save"></button>
+          <button type="button" *ngIf="isNewItem" pButton icon="pi pi-plus" class="ui-button-success" (click)="SaveOrDelete('add')"
+            label="Add"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+  </div>
+</div>

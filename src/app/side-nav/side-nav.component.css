@@ -1,0 +1,22 @@
+#layout-sidebar {
+    position: fixed;
+    left: 0;
+    top: 45px;
+    height: calc(100% - 70px);
+    background-color: #fff;
+    /* overflow-x: hidden; */
+    /* overflow-y: auto; */
+    width: 200px;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.3);
+}
+
+#layout-sidebar .layout-menu {
+    overflow-y: auto;
+    width: 200px;
+}
+
+.name-card {
+    font-size: 20px;
+    color: #282a20;
+    padding-left: 12px;
+  }

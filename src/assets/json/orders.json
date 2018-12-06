@@ -1,0 +1,103 @@
+[{
+    "Id": "1000",
+    "OrderedBy": "Prabhuram",
+    "Status": "NewOrder",
+    "CreatedDate": "11/29/2018",
+    "TotalAmount": "70",
+    "OrderedList": [{
+        "Id": "M100",
+        "ItemCode": "FR12",
+        "ItemName": "Fries",
+        "ItemCost": "20",
+        "Quantity": 2,
+        "Amount": 40
+      },
+      {
+        "Id": "M101",
+        "ItemCode": "SA11",
+        "ItemName": "Salad",
+        "ItemCost": "15",
+        "Quantity": 2,
+        "Amount": 30
+      }
+    ]
+  },
+  {
+    "Id": "1001",
+    "OrderedBy": "Dinesh",
+    "Status": "Accepted",
+    "CreatedDate": "11/29/2018",
+    "TotalAmount": "130",
+    "OrderedList": [{
+        "Id": "M100",
+        "ItemCode": "FR12",
+        "ItemName": "Fries",
+        "ItemCost": "20",
+        "Quantity": 5,
+        "Amount": 100
+      },
+      {
+        "Id": "M101",
+        "ItemCode": "SA11",
+        "ItemName": "Salad",
+        "ItemCost": "15",
+        "Quantity": 2,
+        "Amount": 30
+      }
+    ]
+  },
+  {
+    "Id": "1002",
+    "OrderedBy": "Ashwin",
+    "Status": "Delivered",
+    "CreatedDate": "11/29/2018",
+    "TotalAmount": "35",
+    "OrderedList": [{
+        "Id": "M100",
+        "ItemCode": "FR12",
+        "ItemName": "Fries",
+        "ItemCost": "20",
+        "Quantity": 1,
+        "Amount": 20
+      },
+      {
+        "Id": "M101",
+        "ItemCode": "SA11",
+        "ItemName": "Salad",
+        "ItemCost": "15",
+        "Quantity": 1,
+        "Amount": 15
+      }
+    ]
+  },
+  {
+    "Id": "1003",
+    "OrderedBy": "Santhosh",
+    "Status": "Cancelled",
+    "CreatedDate": "11/29/2018",
+    "TotalAmount": "200",
+    "OrderedList": [{
+      "Id": "M100",
+      "ItemCode": "FR12",
+      "ItemName": "Fries",
+      "ItemCost": "20",
+      "Quantity": 10,
+      "Amount": 200
+    }]
+  },
+  {
+    "Id": "1004",
+    "OrderedBy": "Ragul",
+    "Status": "Rejected",
+    "CreatedDate": "11/29/2018",
+    "TotalAmount": "40",
+    "OrderedList": [{
+      "Id": "M100",
+      "ItemCode": "FR12",
+      "ItemName": "Fries",
+      "ItemCost": "20",
+      "Quantity": 10,
+      "Amount": 40
+    }]
+  }
+]

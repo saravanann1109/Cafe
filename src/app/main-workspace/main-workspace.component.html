@@ -1,0 +1,22 @@
+<div id="layout-content" class="layout-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 col-lg-3 layout-Card" *ngFor="let item of items; let i = index">
+        <p-card [title]="getTitle(item.Name,item.Cost)" styleClass="ui-card-shadow">
+          <p-header>
+            <div class="item-image">
+              <img class="img-size" [src]="item.Image">
+            </div>
+          </p-header>
+          <div class="text-center">
+            <button *ngIf="item.Quantity > 0" pButton icon="pi pi-plus" type="button" class="ui-button-rounded ui-button-success"
+              (click)="addItem(item)"></button>&nbsp;
+            <button pButton [(label)]="item.Quantity === 0 ? 'Add' : item.Quantity" type="button" (click)="addItem(item)"
+              class="ui-button-rounded ui-button-success"></button>&nbsp;
+            <button *ngIf="item.Quantity > 0" pButton icon="pi pi-minus" type="button" class="ui-button-rounded ui-button-success"
+              (click)="deleteItem(item)"></button>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </div>

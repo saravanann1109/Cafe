@@ -1,0 +1,68 @@
+<div id="layout-content" class="layout-content">
+  <div class="container-fluid">
+    <p-table [columns]="cols" [value]="OrderList" selectionMode="single" [(selection)]="selectedItem" (onRowSelect)="onRowSelect($event)"
+      [paginator]="true" [rows]="15">
+      <ng-template pTemplate="caption">
+        Your Order
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary" let-rowData *ngIf="OrderList.length > 0">
+        <div style="text-align:right">
+          <button pButton type="button" class="ui-button-success" (click)="placeOrder()" label="Place Order"></button>
+        </div>
+      </ng-template>
+    </p-table>
+
+    <p-dialog header="Item Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+      [width]="300">
+      <div class="ui-g ui-fluid" *ngIf="item">
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="vin">Item</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="itemName" disabled [(ngModel)]="item.ItemName" />
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="year">Cost</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="cost" disabled [(ngModel)]="item.ItemCost" />
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="brand">Quantity</label>
+          </div>
+          <div class="ui-g-8">
+            <input pInputText id="brand" [(ngModel)]="item.Quantity" />
+          </div>
+        </div>
+      </div>
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-close" class="ui-button-success" (click)="delete(item.ItemCode,item.ItemName)"
+            label="Delete"></button>
+          <button type="button" pButton icon="fa fa-check" class="ui-button-success" (click)="save(item.ItemCode,item.ItemName,item.Quantity)"
+            label="Save"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+  </div>
+</div>

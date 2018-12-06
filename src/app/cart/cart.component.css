@@ -1,0 +1,62 @@
+.layout-content {
+  padding-top: 40px;
+}
+
+
+body .ui-table .ui-table-caption,
+body .ui-table .ui-table-summary {
+  background-color: #344a58;
+  color: #ffffff;
+  padding: 0.571em 1em;
+  text-align: center;
+}
+
+/* body .ui-table .ui-table-tbody > tr:nth-child(even).ui-state-highlight {
+  background-color: #4CAF50;
+  color: #ffffff;
+} */
+
+body .ui-table .ui-table-tbody>tr.ui-state-highlight {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+body .ui-table .ui-table-tbody>tr:nth-child(even).ui-state-highlight {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 1em;
+  font-weight: 400;
+  border-bottom: 0 none;
+}
+
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
+  color: #ffffff;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: #344a58;
+  color: #ffffff;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+  background-color: #344a58;
+  color: #ffffff;
+  padding: 1em;
+  font-weight: 400;
+  border-bottom: 0 none;
+}
+
+btn-add {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+body .ui-table .ui-sortable-column.ui-state-highlight {
+  background-color: #344a58;
+  color: #ffffff;
+}

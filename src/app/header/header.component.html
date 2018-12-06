@@ -1,0 +1,37 @@
+<div class="header">
+  <!-- <a href="#default" class="logo">CompanyLogo</a> -->
+  <a [routerLink]="['/']">
+    <!-- <img class="logo" alt="logo" src="assets/images/Cafe.png" /> -->
+    <span class="feature-title">Cafe</span>
+    <i class="fas fa-coffee header-logo"></i>
+  </a>
+  <div class="header-right">
+    <!-- <a class="active" href="#home">Home</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About</a> -->
+    <a [routerLink]="['/cart']">
+      <i class="pi pi-shopping-cart">
+      </i>
+      <sup *ngIf="count > 0" class="cart-icon">{{count}}
+      </sup>
+    </a>
+    <li *ngIf="false"><a [routerLink]="['']">
+        <i class="pi pi-home">
+        </i>
+      </a>
+    </li>
+    <i class="pi pi-list" (click)="displayNav()" style="font-size:24px;color: white;"></i>
+  </div>
+  <ng-template style="position:relative" class="cart-container" #loading>
+    <div style="position:relative" class="cart-container">
+      <a [routerLink]="['']" class="topbar-menu" style="position: relative">
+        <i class="pi pi-home" style="font-size:24px">
+        </i></a>
+    </div>
+  </ng-template>
+  <p-sidebar [(visible)]="display" position="right" appendTo="body">
+    <div class="ui-g margin-top-10">
+      <p-menu [model]="items" styleClass="ui-g-12"></p-menu>
+    </div>
+  </p-sidebar>
+</div>

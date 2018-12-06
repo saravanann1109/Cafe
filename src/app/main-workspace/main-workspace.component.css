@@ -1,0 +1,18 @@
+.layout-container {
+  padding-top: 40px;
+}
+
+.layout-Card {
+  margin: 10px 0px;
+}
+
+.img-size
+{
+    height: 250px ;
+    width: 100%;
+    object-fit: fill;
+}
+
+.item-image {
+    min-height: 250px;
+}

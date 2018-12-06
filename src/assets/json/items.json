@@ -1,0 +1,64 @@
+[{
+    "Id": "M100",
+    "Code": "FR12",
+    "Name": "Fries",
+    "Cost": "20",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  },
+  {
+    "Id": "M101",
+    "Code": "SA11",
+    "Name": "Salad",
+    "Cost": "15",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  },
+  {
+    "Id": "M102",
+    "Code": "ID14",
+    "Name": "Idli",
+    "Cost": "20",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  },
+  {
+    "Id": "M103",
+    "Code": "PO10",
+    "Name": "Poori",
+    "Cost": "15",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  },
+  {
+    "Id": "M104",
+    "Code": "VA01",
+    "Name": "Vadai",
+    "Cost": "20",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  },
+  {
+    "Id": "M105",
+    "Code": "PO05",
+    "Name": "Pongal",
+    "Cost": "15",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  },
+  {
+    "Id": "M106",
+    "Code": "CM01",
+    "Name": "Chicken Momo",
+    "Cost": "80",
+    "Quantity":0,
+    "Image": "assets/images/NoImage.jpg",
+    "IsActive":"true"
+  }
+]

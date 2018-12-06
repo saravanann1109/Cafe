@@ -1,0 +1,256 @@
+<div id="layout-content" class="order-content">
+  <p-tabView>
+    <p-tabPanel header="All" leftIcon="pi pi-bars" tooltip="1972">
+      <p-table [columns]="cols" [value]="orders" [responsive]="true">
+        <ng-template pTemplate="caption">
+          Orders
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns let last=last">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns ; let last=last">
+              <div *ngIf="!last">
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </div>
+              <div *ngIf="last">
+                <span class="ui-column-title">{{col.header}}</span>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-eye" pTooltip="View Details"
+                  tooltipPosition="top" placeholder="Top" (click)="viewDetails(rowData)"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'NewOrder'" (click)="changeStatus('Accepted',rowData)"
+                  pTooltip="Accept Order" tooltipPosition="top" placeholder="Top" class="ui-button-success" icon="pi pi-plus"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'NewOrder'" (click)="changeStatus('Rejected',rowData)"
+                  pTooltip="Reject Order" tooltipPosition="top" placeholder="Top" class="ui-button-danger" icon="pi pi-times"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Accepted'" (click)="changeStatus('Delivered',rowData)"
+                  pTooltip="Delivered" tooltipPosition="top" placeholder="Top" class="ui-button-success" icon="pi pi-check-circle"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Accepted'" (click)="changeStatus('Rejected',rowData)"
+                  pTooltip="Reject Order" tooltipPosition="top" placeholder="Top" class="ui-button-danger" icon="pi pi-times"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Delivered'" [disabled]="true" label="Delivered"
+                  class="ui-button-rounded ui-button-success"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Cancelled'" [disabled]="true" label="Cancelled"
+                  class="ui-button-rounded ui-button-warning"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Rejected'" [disabled]="true" label="Rejected"
+                  class="ui-button-rounded ui-button-danger"></button>
+
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          Total No of Orders : {{orders?.length}}
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Pending Orders" leftIcon="pi pi-clock" tooltip="1974">
+      <p-table [columns]="cols" [value]="orders" [responsive]="true">
+        <ng-template pTemplate="caption">
+          Orders
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr *ngIf="rowData['Status'] === 'NewOrder'">
+            <td *ngFor="let col of columns ; let last=last">
+              <div *ngIf="!last">
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </div>
+              <div *ngIf="last">
+                <span class="ui-column-title">{{col.header}}</span>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-eye" pTooltip="View Details"
+                  tooltipPosition="top" placeholder="Top" (click)="viewDetails(rowData)"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'NewOrder'" (click)="changeStatus('Accepted',rowData)"
+                  pTooltip="Accept Order" tooltipPosition="top" placeholder="Top" class="ui-button-success" icon="pi pi-plus"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'NewOrder'" (click)="changeStatus('Rejected',rowData)"
+                  pTooltip="Reject Order" tooltipPosition="top" placeholder="Top" class="ui-button-danger" icon="pi pi-times"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          No of Orders pending : {{getCountofOrderByStatus('NewOrder')}}
+        </ng-template>
+      </p-table>
+
+    </p-tabPanel>
+    <p-tabPanel header="Accepted Order" leftIcon="pi pi-plus" tooltip="1990">
+      <p-table [columns]="cols" [value]="orders" [responsive]="true">
+        <ng-template pTemplate="caption">
+          Orders
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr *ngIf="rowData['Status']=== 'Accepted'">
+            <td *ngFor="let col of columns ; let last=last">
+              <div *ngIf="!last">
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </div>
+              <div *ngIf="last">
+                <span class="ui-column-title">{{col.header}}</span>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-eye" pTooltip="View Details"
+                  tooltipPosition="top" placeholder="Top" (click)="viewDetails(rowData)"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Accepted'" (click)="changeStatus('Delivered',rowData)"
+                  pTooltip="Delivered" tooltipPosition="top" placeholder="Top" class="ui-button-success" icon="pi pi-check-circle"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Accepted'" (click)="changeStatus('Rejected',rowData)"
+                  pTooltip="Reject Order" tooltipPosition="top" placeholder="Top" class="ui-button-danger" icon="pi pi-times"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          No of Orders Accepted : {{getCountofOrderByStatus('Accepted')}}
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="Cancelled Order" leftIcon="pi pi-times-circle" tooltip="1990">
+      <p-table [columns]="cols" [value]="orders" [responsive]="true">
+        <ng-template pTemplate="caption">
+          Orders
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr *ngIf="rowData['Status']=== 'Cancelled'">
+            <td *ngFor="let col of columns ; let last=last">
+              <div *ngIf="!last">
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </div>
+              <div *ngIf="last">
+                <span class="ui-column-title">{{col.header}}</span>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-eye" pTooltip="View Details"
+                  tooltipPosition="top" placeholder="Top" (click)="viewDetails(rowData)"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Cancelled'" [disabled]="true" label="Cancelled"
+                  class="ui-button-rounded ui-button-warning"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          No of Orders Cancelled : {{getCountofOrderByStatus('Cancelled')}}
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="Rejected Order" leftIcon="pi pi-times" tooltip="1990">
+      <p-table [columns]="cols" [value]="orders" [responsive]="true">
+        <ng-template pTemplate="caption">
+          Orders
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr *ngIf="rowData['Status']=== 'Rejected'">
+            <td *ngFor="let col of columns ; let last=last">
+              <div *ngIf="!last">
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </div>
+              <div *ngIf="last">
+                <span class="ui-column-title">{{col.header}}</span>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-eye" pTooltip="View Details"
+                  tooltipPosition="top" placeholder="Top" (click)="viewDetails(rowData)"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Rejected'" [disabled]="true" label="Rejected"
+                  class="ui-button-rounded ui-button-danger"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          No of Orders Rejected : {{getCountofOrderByStatus('Rejected')}}
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="Delivered Order" leftIcon="pi pi-check-circle" tooltip="1990">
+      <p-table [columns]="cols" [value]="orders" [responsive]="true">
+        <ng-template pTemplate="caption">
+          Orders
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr *ngIf="rowData['Status']=== 'Delivered'">
+            <td *ngFor="let col of columns ; let last=last">
+              <div *ngIf="!last">
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </div>
+              <div *ngIf="last">
+                <span class="ui-column-title">{{col.header}}</span>
+                <button pButton type="button" class="ui-button-secondary" icon="pi pi-eye" pTooltip="View Details"
+                  tooltipPosition="top" placeholder="Top" (click)="viewDetails(rowData)"></button>
+                <button pButton type="button" *ngIf="rowData['Status'] === 'Delivered'" [disabled]="true" label="Delivered"
+                  class="ui-button-rounded ui-button-success"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          No of Orders Delivered : {{getCountofOrderByStatus('Delivered')}}
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
+  <p-dialog header="Menu Items" [(visible)]="display" [width]="650">
+    <p-table [columns]="orderDetailCol" [value]="items" [responsive]="true">
+      <!-- <ng-template pTemplate="caption">
+        Menu Items
+      </ng-template> -->
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <span class="ui-column-title">{{col.header}}</span>
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+          <div style="float:left">Status : {{getStatus()}}</div>
+        No of Items : {{items?.length}}
+        <div style="float:right">Total : {{getTotalAmount()}}</div>
+      </ng-template>
+    </p-table>
+  </p-dialog>
+</div>
