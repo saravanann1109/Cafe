@@ -127,3 +127,7 @@ body .ui-chkbox .ui-chkbox-box.ui-state-active {
   background-color: #4CAF50;
   color: #ffffff;
 }
+
+dialog{
+    left: 25%;
+}

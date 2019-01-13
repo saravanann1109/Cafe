@@ -18,13 +18,13 @@ const appRoutes: Routes = [
                 path: 'cart', component: CartComponent
             },
             {
-                path: 'manage-users', canActivate: [IsAuthorizedUser], component: ManageusersComponent
+                path: 'manage-users', component: ManageusersComponent
             },
             {
-                path: 'manage-menus', canActivate: [IsAuthorizedUser], component: ManageMenusComponent
+                path: 'manage-menus', component: ManageMenusComponent
             },
             {
-                path: 'manage-orders', canActivate: [IsAuthorizedUser], component: OrdersComponent
+                path: 'manage-orders', component: OrdersComponent
             }
         ]
     },

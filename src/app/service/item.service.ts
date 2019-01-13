@@ -6,7 +6,7 @@ import { addOrDelete } from '../model/item-master';
 
 @Injectable()
 export class ItemService {
-    configUrl = 'assets/json/items.json';
+    configUrl = 'http://localhost:3000/';
     public addItemListener: EventEmitter<any> = null;
     public componentListener: EventEmitter<string> = null;
     public message: EventEmitter<Message> = null;
@@ -22,9 +22,9 @@ export class ItemService {
      * get Items from the API.
      */
     getItems() {
-        return this.http.get(this.configUrl);
+        return this.http.get(this.configUrl + 'menu');
     }
-    
+
     /**
      * for displaying count to the count icon
      * @param count specify the count 
@@ -81,7 +81,9 @@ export class ItemService {
      */
     placeOrder() {
         this.refreshData();
-        return true;
+        this.http.post(this.configUrl + 'placeorder', this.getOrderForm()).subscribe((response: any) => {
+            return true;
+        });
     }
 
     /**
@@ -96,9 +98,11 @@ export class ItemService {
        */
     getQuantity() {
         let quantity: number = 0;
-        this.order.OrderedList.forEach((item: OrderDetail) => {
-            quantity = quantity + item.Quantity;
-        });
+        if (this.order) {
+            this.order.OrderedList.forEach((item: OrderDetail) => {
+                quantity = quantity + item.Quantity;
+            });
+        }
         return quantity;
     }
 
@@ -107,14 +111,16 @@ export class ItemService {
      */
     refreshData() {
         let orders: OrderDetail[] = [];
-        Object.assign(orders, this.order.OrderedList);
-        if (orders) {
-            orders.forEach((item: OrderDetail) => {
-                let counter = this.order.OrderedList.findIndex((x => x.ItemName === item.ItemName && x.ItemCode === item.ItemCode && x.Quantity === 0));
-                if (counter > -1)
-                    this.order.OrderedList.splice(counter, 1);
-            });
+        if (this.order) {
+            Object.assign(orders, this.order.OrderedList);
+            if (orders) {
+                orders.forEach((item: OrderDetail) => {
+                    let counter = this.order.OrderedList.findIndex((x => x.ItemName === item.ItemName && x.ItemCode === item.ItemCode && x.Quantity === 0));
+                    if (counter > -1)
+                        this.order.OrderedList.splice(counter, 1);
+                });
 
+            }
         }
     }
 }

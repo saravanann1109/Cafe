@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { OrderService } from '../service/manage-orders.service';
 import { OrderForm, OrderStatus, OrderDetail } from '../model/order-form';
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-orders',
@@ -15,7 +16,7 @@ export class OrdersComponent implements OnInit {
   items: OrderDetail[];
   orderStatus: OrderStatus;
   display: boolean = false;
-  constructor(private orderService: OrderService) { }
+  constructor(private commonService:CommonService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.display = false;
@@ -103,15 +104,25 @@ export class OrdersComponent implements OnInit {
     if (status && rowData) {
       let index = this.orders.findIndex(x => x.Id == rowData.Id);
       if (index > -1) {
+        this.orders[index].ModifiedBy = (this.commonService.getUser() !== null) ? this.commonService.getUser().UserName : null;
         switch (status) {
           case "Rejected":
             this.orders[index].Status = OrderStatus.Rejected;
+            this.orderService.updateOrderStatus(this.orders[index]).subscribe((response:any)=>{
+              this.commonService.emitMessage('success',this.orders[index].Id + 'is rejected',this.orders[index].Id + 'is rejected');
+            });
             break;
           case "Accepted":
             this.orders[index].Status = OrderStatus.Accepted;
+            this.orderService.updateOrderStatus(this.orders[index]).subscribe((response:any)=>{
+              this.commonService.emitMessage('success',this.orders[index].Id + 'is accepted',this.orders[index].Id + 'is accepted');
+            });
             break;
           case "Delivered":
             this.orders[index].Status = OrderStatus.Delivered;
+            this.orderService.updateOrderStatus(this.orders[index]).subscribe((response:any)=>{
+              this.commonService.emitMessage('success',this.orders[index].Id + 'is delivered',this.orders[index].Id + 'is delivered');
+            });
             break;
         }
       }

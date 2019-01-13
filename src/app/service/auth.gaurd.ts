@@ -1,19 +1,22 @@
 import { CanActivate, Router } from "@angular/router";
 import { CommonService } from "./common.service";
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 @Injectable()
 export class IsAuthenticateUser implements CanActivate {
-    
-    constructor(private commonService: CommonService,private router:Router) {
+
+    constructor(private commonService: CommonService, private router: Router) {
 
     }
     canActivate() {
-        let isValidUser = this.commonService.isUserLoggedIn();
-        if (isValidUser === true) {
+        let user = this.commonService.isUserLoggedIn();
+        if(user)
+        {
             return true;
         }
-        else {
-            this.router.navigate(['/login']);
+        else
+        {
+            this.router.navigate(['/']);
             return false;
         }
     }
@@ -21,8 +24,8 @@ export class IsAuthenticateUser implements CanActivate {
 
 @Injectable()
 export class IsAuthorizedUser implements CanActivate {
-    
-    constructor(private commonService: CommonService,private router:Router) {
+
+    constructor(private commonService: CommonService, private router: Router) {
 
     }
     canActivate() {
@@ -31,7 +34,7 @@ export class IsAuthorizedUser implements CanActivate {
             return true;
         }
         else {
-             this.router.navigate(['/']);
+            this.router.navigate(['/']);
             return false;
         }
     }

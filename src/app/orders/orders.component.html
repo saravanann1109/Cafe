@@ -16,8 +16,16 @@
           <tr>
             <td *ngFor="let col of columns ; let last=last">
               <div *ngIf="!last">
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
+                <!-- <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}} -->
+                <span *ngIf="(col.header === 'Total') else withoutCurrency">
+                  {{rowData[col.field] | currency: 'INR':true}}
+                </span>
+                <ng-template #withoutCurrency>
+                  <span>
+                    {{rowData[col.field]}}
+                  </span>
+                </ng-template>
               </div>
               <div *ngIf="last">
                 <span class="ui-column-title">{{col.header}}</span>
@@ -63,8 +71,14 @@
           <tr *ngIf="rowData['Status'] === 'NewOrder'">
             <td *ngFor="let col of columns ; let last=last">
               <div *ngIf="!last">
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
+                <span *ngIf="(col.header === 'Total') else withoutCurrency">
+                  {{rowData[col.field] | currency: 'INR':true}}
+                </span>
+                <ng-template #withoutCurrency>
+                  <span>
+                    {{rowData[col.field]}}
+                  </span>
+                </ng-template>
               </div>
               <div *ngIf="last">
                 <span class="ui-column-title">{{col.header}}</span>
@@ -100,8 +114,14 @@
           <tr *ngIf="rowData['Status']=== 'Accepted'">
             <td *ngFor="let col of columns ; let last=last">
               <div *ngIf="!last">
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
+                <span *ngIf="(col.header === 'Total') else withoutCurrency">
+                  {{rowData[col.field] | currency: 'INR':true}}
+                </span>
+                <ng-template #withoutCurrency>
+                  <span>
+                    {{rowData[col.field]}}
+                  </span>
+                </ng-template>
               </div>
               <div *ngIf="last">
                 <span class="ui-column-title">{{col.header}}</span>
@@ -137,8 +157,14 @@
           <tr *ngIf="rowData['Status']=== 'Cancelled'">
             <td *ngFor="let col of columns ; let last=last">
               <div *ngIf="!last">
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
+                <span *ngIf="(col.header === 'Total') else withoutCurrency">
+                  {{rowData[col.field] | currency: 'INR':true}}
+                </span>
+                <ng-template #withoutCurrency>
+                  <span>
+                    {{rowData[col.field]}}
+                  </span>
+                </ng-template>
               </div>
               <div *ngIf="last">
                 <span class="ui-column-title">{{col.header}}</span>
@@ -172,8 +198,14 @@
           <tr *ngIf="rowData['Status']=== 'Rejected'">
             <td *ngFor="let col of columns ; let last=last">
               <div *ngIf="!last">
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
+                <span *ngIf="(col.header === 'Total') else withoutCurrency">
+                  {{rowData[col.field] | currency: 'INR':true}}
+                </span>
+                <ng-template #withoutCurrency>
+                  <span>
+                    {{rowData[col.field]}}
+                  </span>
+                </ng-template>
               </div>
               <div *ngIf="last">
                 <span class="ui-column-title">{{col.header}}</span>
@@ -207,8 +239,14 @@
           <tr *ngIf="rowData['Status']=== 'Delivered'">
             <td *ngFor="let col of columns ; let last=last">
               <div *ngIf="!last">
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
+                <span *ngIf="(col.header === 'Total') else withoutCurrency">
+                  {{rowData[col.field] | currency: 'INR':true}}
+                </span>
+                <ng-template #withoutCurrency>
+                  <span>
+                    {{rowData[col.field]}}
+                  </span>
+                </ng-template>
               </div>
               <div *ngIf="last">
                 <span class="ui-column-title">{{col.header}}</span>
@@ -241,8 +279,14 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
-            <span class="ui-column-title">{{col.header}}</span>
-            {{rowData[col.field]}}
+            <span *ngIf="(col.header === 'Total') else withoutCurrency">
+              {{rowData[col.field] | currency: 'INR':true}}
+            </span>
+            <ng-template #withoutCurrency>
+              <span>
+                {{rowData[col.field]}}
+              </span>
+            </ng-template>
           </td>
         </tr>
       </ng-template>

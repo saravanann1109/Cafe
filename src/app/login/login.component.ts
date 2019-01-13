@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonService } from '../service/common.service';
 import { Router } from "@angular/router"
+import { User } from '../model/user';
+import { error } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +21,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    let value = this.commonService.isAuthenticateUser(this.userName, this.password);
-    if (value === true) {
-      this.router.navigate(['/']);
-    }
-    else {
-      this.incorrect = true;
-    }
+     this.commonService.isAuthenticateUser(this.userName, this.password).subscribe((result:any)=>{
+       this.commonService.setSession(result);
+       this.router.navigate(['/']);
+     },(error =>{
+       this.incorrect = true;
+     }));
   }
 
 }

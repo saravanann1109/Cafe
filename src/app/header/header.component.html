@@ -9,17 +9,17 @@
     <!-- <a class="active" href="#home">Home</a>
       <a href="#contact">Contact</a>
       <a href="#about">About</a> -->
-    <a [routerLink]="['/cart']">
+    <a *ngIf="component !== 'CartComponent'" [routerLink]="['/cart']">
       <i class="pi pi-shopping-cart">
       </i>
       <sup *ngIf="count > 0" class="cart-icon">{{count}}
       </sup>
     </a>
-    <li *ngIf="false"><a [routerLink]="['']">
+    <a *ngIf="component === 'CartComponent'" [routerLink]="['/']">
         <i class="pi pi-home">
         </i>
       </a>
-    </li>
+    
     <i class="pi pi-list" (click)="displayNav()" style="font-size:24px;color: white;"></i>
   </div>
   <ng-template style="position:relative" class="cart-container" #loading>

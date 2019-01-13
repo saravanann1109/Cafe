@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ItemMaster } from '../model/item-master';
-import { ItemService } from '../service/item.service';
 import { AdministrationService } from '../service/administration.service';
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-manage-menus',
@@ -16,7 +16,7 @@ export class ManageMenusComponent implements OnInit {
   selectedItem: ItemMaster;
   item: ItemMaster;
   displayDialog: boolean;
-  constructor(private adminService: AdministrationService) { }
+  constructor(private adminService: AdministrationService, private commonService: CommonService) { }
 
   ngOnInit() {
     this.displayDialog = false;
@@ -35,7 +35,7 @@ export class ManageMenusComponent implements OnInit {
       { field: 'Name', header: 'Name' },
       { field: 'Code', header: 'Code' },
       { field: 'Cost', header: 'Amount' },
-      {field:'IsActive',header:'IsActive'}
+      { field: 'IsActive', header: 'IsActive' }
     ];
   }
 
@@ -75,22 +75,34 @@ export class ManageMenusComponent implements OnInit {
    * @param type specify the type of the action.
    */
   SaveOrDelete(type: string) {
-    if (this.item && this.item.Code != null) {
+    if (this.item && (this.item.Code != null && this.item.Code != undefined)) {
       let index = this.itemsList.findIndex(x => x.Code == this.item.Code);
       switch (type) {
         case "add":
-          this.itemsList.push(this.item);
+          this.item.CreatedBy = (this.commonService.getUser() !== null) ? this.commonService.getUser().UserName : null;
+          this.adminService.addItem(this.item).subscribe((response: any) => {
+            this.item = response;
+            this.itemsList.push(this.item);
+            this.commonService.emitMessage('success', this.item.Name + ' ' + 'Added!!!', this.item.Name + ' is added successfully');
+          })
           break;
         case "save":
           if (index > -1)
-            this.itemsList[index] = this.item;
+          this.item.ModifiedBy = (this.commonService.getUser() !== null) ? this.commonService.getUser().UserName : null;
+            this.adminService.saveItem(this.item).subscribe((response: ItemMaster) => {
+              this.itemsList[index] = response;
+              this.commonService.emitMessage('success', this.item.Name + ' ' + 'Updated!!!', this.item.Name + ' is updated successfully');
+            });
           break;
         case "delete":
           if (index > -1)
-            this.itemsList.splice(index, 1);
+            this.adminService.deleteItem(this.item.Id).subscribe((response: ItemMaster) => {
+              this.itemsList.splice(index, 1);
+              this.commonService.emitMessage('success', this.item.Name + ' ' + 'Deleted!!!', this.item.Name + ' is deleted successfully')
+            });
           break;
       }
-      this.item = new ItemMaster();
+      // this.item = new ItemMaster();
       this.displayDialog = false;
     }
   }

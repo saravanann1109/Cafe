@@ -13,15 +13,65 @@ export class HeaderComponent implements OnInit {
   public display: boolean = false;
   public component: string = "";
   items: MenuItem[];
-  isAdmin : boolean;
-  isAuthenticated:boolean;
-  constructor(private commonService:CommonService,private itemService: ItemService) { }
+  isAdmin: boolean = false;
+  isAuthenticated: boolean = false;
+  constructor(private commonService: CommonService, private itemService: ItemService) { }
   public menu: string[] = ["Login", "Contact Us"];
   public menuMain: string[] = ["My Orders", "Manage Items", "Mange ORders", "Log Out"];
   ngOnInit() {
-    
-    this.isAuthenticated = this.commonService.isAuthorized;
-    this.isAdmin = this.commonService.role === "admin" ? true : false;
+
+    this.commonService.eventEmit.subscribe((res) => {
+      this.isAuthenticated = this.commonService.isAuthorized;
+      this.isAdmin = (this.commonService.getUser()) !== null ? this.commonService.getUser().Role === "Admin" ? true : false : false;
+      this.items = [
+        {
+          label: 'Login',
+          icon: 'pi pi-sign-in',
+          routerLink: '/login',
+          visible: !this.isAuthenticated,
+          command: () => {
+            this.display = false;
+          }
+        },
+        {
+          label: 'Manage Orders',
+          icon: 'fa fa-clipboard-list',
+          visible: this.isAuthenticated && this.isAdmin,
+          routerLink: '/manage-orders',
+          command: () => {
+            this.display = false;
+          }
+        },
+        {
+          label: 'Manage Menu',
+          icon: 'fas fa-list-alt',
+          visible: this.isAuthenticated && this.isAdmin,
+          routerLink: '/manage-menus',
+          command: () => {
+            this.display = false;
+          }
+        },
+        {
+          label: 'Manage Users',
+          icon: 'pi pi-users',
+          visible: this.isAuthenticated && this.isAdmin,
+          routerLink: '/manage-users',
+          command: () => {
+            this.display = false;
+          }
+        },
+        {
+          label: 'Sign-out',
+          icon: 'pi pi-sign-out',
+          visible: this.isAuthenticated,
+          routerLink: '/login',
+          command: () => {
+            this.commonService.clearSession();
+            this.display = false;
+          }
+        }
+      ];
+    });
     this.itemService.addItemListener.subscribe((counter: number) => {
       this.count = counter;
     });
@@ -29,53 +79,7 @@ export class HeaderComponent implements OnInit {
     this.itemService.componentListener.subscribe((component: string) => {
       this.component = component;
     });
-    this.items = [
-      {
-        label: 'Login',
-        icon: 'pi pi-sign-in',
-        routerLink: '/login',
-        visible : !this.isAuthenticated,
-        command: () => {
-          this.display = false;
-        }
-      },
-      {
-        label: 'Manage Orders',
-        icon: 'fa fa-clipboard-list',
-        visible : this.isAuthenticated && this.isAdmin,
-        routerLink: '/manage-orders',
-        command: () => {
-          this.display = false;
-        }
-      },
-      {
-        label: 'Manage Menu',
-        icon: 'fas fa-list-alt',
-        visible : this.isAuthenticated && this.isAdmin,
-        routerLink: '/manage-menus',
-        command: () => {
-          this.display = false;
-        }
-      },
-      {
-        label: 'Manage Users',
-        icon: 'pi pi-users',
-        visible : this.isAuthenticated && this.isAdmin,
-        routerLink: '/manage-users',
-        command: () => {
-          this.display = false;
-        }
-      },
-      {
-        label: 'Sign-out',
-        icon: 'pi pi-sign-out',
-        visible: this.isAuthenticated,
-        routerLink: '/login',
-        command: () => {
-          this.display = false;
-        }
-      }
-    ];
+
   }
 
 

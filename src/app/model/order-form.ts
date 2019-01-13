@@ -1,10 +1,12 @@
 export class OrderForm {
+    _id:string;
     public Id: string
     public OrderedBy: string
     public Status: OrderStatus
     public tempStatus: string
     public CreatedDate: Date
     public ModifiedDate: Date
+    public ModifiedBy:string
     // public RequiredDateTime:DateTimeFormat
     public IsPacking: boolean
     public TotalAmount: number
@@ -32,7 +34,7 @@ export enum OrderStatus {
 }
 
 export class OrderDetail {
-    public Id: number;
+    public Id: string;
     public ItemCode: string;
     public ItemName: string;
     public ItemCost: number;

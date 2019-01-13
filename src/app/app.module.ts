@@ -19,6 +19,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
 import {TabViewModule} from 'primeng/tabview';
 import {TooltipModule} from 'primeng/tooltip';
 import { HeaderComponent } from './header/header.component';
@@ -57,6 +58,7 @@ import { OrderService } from './service/manage-orders.service';
     InputTextModule,
     BrowserAnimationsModule,
     ButtonModule,
+    DropdownModule,
     TabViewModule,
     CheckboxModule,
     PasswordModule,

@@ -3,6 +3,7 @@ import { ItemService } from '../service/item.service';
 import { OrderForm, OrderDetail } from '../model/order-form';
 import { Message } from '../model/message';
 import { Router } from "@angular/router"
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-cart',
@@ -17,7 +18,7 @@ export class CartComponent implements OnInit {
   item: OrderDetail;
   selectedItem: OrderDetail;
   cols: any[];
-  constructor(private itemService: ItemService, private router: Router) { }
+  constructor(private commonService:CommonService, private itemService: ItemService, private router: Router) { }
 
   ngOnInit() {
     this.itemService.switchComponent("CartComponent");
@@ -73,12 +74,24 @@ export class CartComponent implements OnInit {
 
   placeOrder() {
     if (this.orderForm && this.OrderList) {
+      this.itemService.order.TotalAmount = this.getTotalAmount();
+      this.itemService.order.OrderedBy = (this.commonService.getUser() !== null) ? this.commonService.getUser().UserName : null;
       this.itemService.placeOrder();
       let message = new Message("Order Placed", "Your order is placed successfully!!!.");
       this.itemService.message.emit(message);
       this.itemService.addItemListener.emit(0);
       this.itemService.clearOrderForm();
       this.router.navigate(['/']);
+    }
+  }
+
+  getTotalAmount() {
+    if (this.orderForm && this.OrderList) {
+      let amount: number = 0;
+      this.OrderList.forEach((item: OrderDetail) => {
+        amount = amount + item.Amount;
+      });
+      return amount;
     }
   }
 }

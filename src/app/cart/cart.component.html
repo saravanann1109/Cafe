@@ -16,12 +16,21 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr [pSelectableRow]="rowData">
           <td *ngFor="let col of columns">
-            {{rowData[col.field]}}
+            <span *ngIf="(col.header === 'Item Cost') || (col.header === 'Amount') else withoutCurrency">
+              {{rowData[col.field] | currency: 'INR':true}}
+            </span>
+            <ng-template #withoutCurrency>
+              <span>
+                {{rowData[col.field]}}
+              </span>
+            </ng-template>
+
           </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary" let-rowData *ngIf="OrderList.length > 0">
         <div style="text-align:right">
+            <span> Total Amount : {{getTotalAmount() | currency: 'INR':true}}</span> &nbsp;&nbsp;
           <button pButton type="button" class="ui-button-success" (click)="placeOrder()" label="Place Order"></button>
         </div>
       </ng-template>

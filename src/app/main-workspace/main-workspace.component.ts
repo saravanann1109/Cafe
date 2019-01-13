@@ -18,15 +18,17 @@ export class MainWorkspaceComponent implements OnInit {
     this.orderForm = new OrderForm();
     this.itemService.getItems().subscribe((item: ItemMaster[]) => {
       this.items = item;
-      if (this.itemService.order && this.itemService.order.OrderedList.length > 0) {
-        this.orderForm = this.itemService.order;
-        this.itemService.order.OrderedList.forEach((items: OrderDetail) => {
-          let index = this.items.findIndex(x => x.Name === items.ItemName && x.Code === items.ItemCode);
-          if (index > -1) {
+      if (this.itemService.order !== null && this.itemService.order !== undefined) {
+        if (this.itemService.order && this.itemService.order.OrderedList.length > 0) {
+          this.orderForm = this.itemService.order;
+          this.itemService.order.OrderedList.forEach((items: OrderDetail) => {
+            let index = this.items.findIndex(x => x.Name === items.ItemName && x.Code === items.ItemCode);
+            if (index > -1) {
 
-            this.items[index].Quantity = items.Quantity;
-          }
-        });
+              this.items[index].Quantity = items.Quantity;
+            }
+          });
+        }
       }
       this.itemService.addItem(this.itemService.getQuantity() > 0 ? this.itemService.getQuantity() : 0);
     });
@@ -63,7 +65,10 @@ export class MainWorkspaceComponent implements OnInit {
    */
   addOrDeleteItem(item: ItemMaster, addDeleteType: addOrDelete) {
     let details: OrderDetail = new OrderDetail();
-
+     if(this.itemService.order === null || this.itemService.order === undefined)
+     {
+       this.itemService.order = new OrderForm();
+     }
     if (this.itemService.order.OrderedList.findIndex((x => x.ItemCode === item.Code)) > -1) {
       let orderItem: OrderDetail = this.itemService.order.OrderedList[this.itemService.order.OrderedList.findIndex((x => x.ItemCode === item.Code))];
       if (orderItem) {
@@ -74,6 +79,7 @@ export class MainWorkspaceComponent implements OnInit {
 
     }
     else {
+      details.Id = item.Id;
       details.ItemName = item.Name;
       details.ItemCode = item.Code;
       details.ItemCost = item.Cost;
@@ -88,6 +94,6 @@ export class MainWorkspaceComponent implements OnInit {
   }
 
   getTitle(itemName: string, itemCost: number) {
-    return itemName.concat(' - Rs.' + itemCost);
+    return itemName.concat(' : ' + itemCost);
   }
 }
